@@ -44,7 +44,7 @@ Open the *DTP-Visualisation-Task1* workflow and execute it. This loads the heart
 .. figure:: _images/simpleviz-viewpage.png
    :align: center
 
-   Task 1 SimpleViz heart model construction visualisation, with view controls.
+   SimpleViz heart model construction visualisation, with view controls.
 
 This is a made-up example for demonstrating how complex models are built out of simple shapes (finite elements), in this case cubes. Once you play around with it you will see how a good visualisation can explain complex behaviour with great efficiency.
 
@@ -100,7 +100,7 @@ In this task we will create basic graphics to visualise a 3-D heart model, and o
 .. figure:: _images/simpleviz-graphicspage-heart.png
    :align: center
 
-   Task 2 SimpleViz graphics page showing heart model ready for print output.
+   SimpleViz graphics page showing heart model ready for print output.
 
 The graphics page lists all the individual graphics that make up the visualisation of the model. Each listed graphics item has a square checkbox that controls whether it is visible or not. The heart model is initially visualised with lines, surfaces and node points (drawn as spheres).
 
@@ -142,7 +142,7 @@ Contours
 
 Add *contours* graphics and choose scale field 'slice' and isovalues=0. The slice field is defined as a scalar (single component value) given by the plane equation Ax + By + Cz with the right-hand-side given by the isovalues. Experiment with other fields such as lambda, mu, theta (the prolate coordinates) and different isovalues such as 0.7 (or multiple comma-separated isovalues) for these fields.
 
-Drawing contours/isosurfaces is one of the key techniques for visualising the interior of a 3-D model. Often there is a threshold value of a scalar field where interesting or problematic behaviour occurs: where stress exceeds what the material can handle, or where the electric potential of the heart cells rises to a point where the muscle contracts. In such case a single image can often communicate the main features of what is happing at that time.
+Drawing contours/isosurfaces is one of the key techniques for visualising the interior of a 3-D model. Often there is a threshold value of a scalar field where interesting or problematic behaviour occurs: where stress exceeds what the material can handle, or where the electric potential of the heart cells rises to a point where the muscle contracts. In such cases a single image can often communicate the main features of what is happing at that time.
 
 Always rotate, zoom and pan around to see what you have created.
 
@@ -162,104 +162,99 @@ Tessellation quality is a compromise; use fewer divisions for interactive speed,
 Streamlines
 ...........
 
-Hide the contours and create *streamlines*. Normally streamlines are used to visualise fluid flow, however muscle tissue is fibrous and to model its deformation and electrical conduction requires the orientation of these fibres to be described throughout the domain. The 'fibres' field describes the orientation of the muscle fibres, but also the lateral sheet direction and sheet normal. This field is suitable for visualisation with streamlines.
+Normally streamlines are used to visualise fluid flow, however muscle tissue is fibrous and to model its deformation and electrical conduction requires the orientation of these fibres to be described throughout the domain. The 'fibres' field describes the orientation of the muscle fibres, but also the lateral sheet direction and sheet normal. This field is suitable for visualisation with streamlines.
 
-You must specify a vector field to track along, in this case 'fibres'. Set the time length to 100 to see many fibres drawn as lines. You're free to seed streamlines from multiple sampling points, but we'll stick with the default centre of each element. Now set the bases size to '1*0.1' and the line shape to 'square extrusion'. Set the material to 'silver'. This visualises not only the direction of the muscle fibres, but also the planes of muscle fibre sheets, which have different material properties to the sheet normals. Zoom in and have a close look at the resulting graphics.
+Hide the contours and create *streamlines*. Select streamlines vector field 'fibres', and set the time length to 100 to see many fibres drawn as lines. You're free to seed streamlines from multiple sampling points, but we'll stick with the default centre of each element. Now set the bases size to '1*0.2' and the line shape to 'square extrusion'. Set the material to 'silver'. This visualises not only the direction of the muscle fibres, but also the planes of muscle fibre sheets, which have different material properties to the sheet normals. Zoom in and have a close look at the resulting graphics.
 
 Printed Output
 ..............
 
-White or coloured graphics on a black background looks great on-screen but terrible on the printed page, plus it is a huge waste of ink/toner! On the view page change the background colour to '1,1,1' i.e. white. The problem now is that the white graphics are invisible over the white background! On the graphics page select the *lines* graphics and change the material to 'black'. Do the same to the *point* graphics used to show the colour bar, so the labels appear in black. We now have what we want on the printed page (admittedly in a more powerful graphics package we may want to make the lines thicker, and change the font, however SimpleViz hides these options).
+White or coloured graphics on a black background looks great on-screen but terrible on the printed page, plus it is a huge waste of ink/toner! On the view page change the background colour to '1,1,1' i.e. white. The problem now is that the white graphics are invisible over the white background! On the graphics page select the *lines* graphics and change the material to 'black'. Do the same to the *point* graphics used to show the colour bar, so the labels appear in black. We now have what we want on the printed page (admittedly in a more sophisticated graphics package we may want to make the lines thicker, and change the font, however SimpleViz hides these options).
 
 Adjust the window to the size you want, and the orientation of the heart so it looks balanced. From the Output page of the toolbar, click on 'Save image...' and enter a name, say 'myheart.png'. From outside MAP Client / SimpleViz browse to the file location and have a look at the final output image, which is ready to put in your publication.
 
-Task 3: Deformation and strain fields
--------------------------------------
+Task 3: Deformation Animation
+-----------------------------
 
+In this task we read a heart contraction simulation, visualise deformation and strains and output a 3-D animation to the web. Open the *DTP-Visualisation-Task3* workflow and execute it. :numref:`fig_dtp_cp_vis_simpleviz_deforming_heart` shows a close up of this model visualising strain tensors.
 
+.. _fig_dtp_cp_vis_simpleviz_deforming_heart:
 
-Point graphics are drawn using glyphs.  There are pre-defined glyphs that have already been created that can be used to produce interesting visualisations, sometimes a cube glyph is more appropriate representation of the data.  Select the 'node points' from the graphics list [3] and change the glyph to 'cube_solid'.  We can use the scaling to change the size of the glyph (and other graphics).  The final size of the scaled object is defined as::
-
-If no scale field is set and the base size is zero then the graphics will be not be visible.
-
-.. _dtp_cp_vis_graphicspane:
-.. figure:: _images/graphicspane.png
+.. figure:: _images/simpleviz-deforming-heart.png
    :align: center
-   :alt: Graphics pane image
-   
-   Graphics pane
 
-We can also add new graphics with the `add button` [4].  Add a 'point graphic', change the glyph for the new graphic to 'axes_xyz' and set the base size to 50.  This point graphic is representing the global x, y, z axes in the current scene.
+   Visualising strain tensors in the deforming heart.
 
-The heart model contains data on the direction of the fibres within the heart wall, to visualise this we can add some more graphics.  Using the following instructions we can visualise the heart fibre direction::
+This model's loader script defines a Lagrangian finite strain field using the rate of change of the coordinate field in deformed versus reference states. Eigenanalysis is performed to get principal strains and their directions, and these are used to scale and orient mirrored cone glyphs. The above figure shows that the first element points' cones are oriented with the first principal strain direction. Not shown in the SimpleViz interface are the mirror and signed scale options use to scale the cones and point them inwards in compression and outwards in extension. A special spectrum is used to show extension in blue and compression in red, using the first principal strain as the data field.
 
-   1. Add 'streamlines' using the Add combobox [3]
-   2. Set the Streamlines vector field to 'fibres' using the Vector field combobox [8]
-   3. Using the Shape combobox [9] set the shape to 'square extrusion'
-   4. Set the base size to 1*0.2
-   5. Set the sampling divisions to 1*3*1
-   6. Set the Time length [10] value to 50
+[At the end of this task, advanced users may want to look at the loader script to see how the time-varying model is loaded, how the additional fields are created by expressions, plus how the advanced visualisation options are set up. This example demonstrates that you don't need to be stuck looking at the results exported from your solver; additional fields for visualisation can be created from any mathematical or algorithmic transformation on the exported fields.]
 
-Here we have set the base size and sampling divisions using a special notation.  This notation allows us to set different values for different components, we can also just set one value which will be propagated across all components automatically.
+Go to the time page of the toolbar and adjust time to observe the passive inflation and contraction phases of the deformation (the last phase was not solved and just interpolates back to the start). View the changing strains which show how the material deforms at those points. Change the glyph for each element points graphics to 'arrow_solid' and see how it looks. On the Rendering page change the circle divisions to 4, then 6 and back to 12 to see the effect on the quality of the arrows; the higher the number, the more time it takes to draw the graphics; this may not affect this smallish example, but try increasing the number of sampling divisions on all three element points graphics (to 3*3*3 or higher) to see if it has an effect, particularly when animating.
 
-It is often desirable to view the contours of the data, a contour is where the function has a constant value.  We can show contours through the heart wall volume.  To do this::
+Making Web Animations
+.....................
 
-   1. Add a 'contour' graphic using the Add button [4]
-   2. Set the value field to 'lambda'
-   3. Set the iso value to 0.75
+Hide all three element points and view the deformation. Change the surfaces to show all faces, with exterior on. Hide the lines. Look at how the ventricle twists as it contracts.
 
-We can see now that the visualisation is getting quite busy.  To reduce some of the graphics visible we can try setting the exterior checkbox [5] on the surfaces.  The exterior checkbox allows us to only view the exterior surfaces of a volume.  This can be very useful especially when using transparent materials where we do not wish to show the construction of the mesh used for the model.
+Traditionally we've produced movies to demonstrate dynamic behaviour, by writing a series of images at different times and using an external movie-maker tool to combine them into a movie file. However, these only show the results from a fixed direction or trajectory.
 
-We can colour the graphics according to some data available in the model.  We will colour the surfaces with the lambda field to do this::
+Here we are going to export an animated outside surface of the heart into 'ThreeJS' format for viewing in a web app (using WebGL). On the Output page, click on 'Save WebGL...', navigate to the 'export' folder as instructed by the tutor, choose a filename prefix e.g. 'defheart' and click 'Save'.
 
-   1. Select the surfaces in the graphics list
-   2. From the data combobox [6] choose the 'lambda' field
+Now open a FireFox browser (other browsers are not yet properly supported) and load the following file from the above export folder, specifying the PATH and the inputprefix of your exported model::
 
-For the final rendering before we produce a publishable image we may decide that the background colour is not suitable for our target medium.  We can change the background colour one the view pane.  Using the view pane thingy box set the RGB values for the background colour, 1,1,1 will set the background colour to white for example.
+  file:///PATH/export/sample_export.html?inputprefix=defheart
 
-We can also control the quality of the rendering via the refinement option on the rendering pane (:numref:`dtp_cp_vis_renderingpane`).  Use this control carefully it can take a long time to render highly refined graphics.  The circle divisions option controls the quality of spheres and cylinders.  Set the refinement factor to 10 and see the result.
+It should display the model as a slowly deforming heart, which you can view from different directions just as in SimpleViz. This technology is relatively new and there is still much to be exploited, but it shows one of the ways visualisations will be shared in the future.
 
-.. _dtp_cp_vis_renderingpane:
-.. figure:: _images/renderingpane.png
+Task 4 Lung Airways Network
+---------------------------
+
+In this task we read a model of the network of airways in both left and right lungs. The airways are one dimensional elements, but they have a radius field which is used to give them a three dimensional form. Open the *DTP-Visualisation-Task4* workflow and execute it; it's a large model and can take a while to load. :numref:`fig_dtp_cp_vis_simpleviz_airways` shows a close up of this model at the end of this task.
+
+.. _fig_dtp_cp_vis_simpleviz_airways:
+
+.. figure:: _images/simpleviz-airways.png
    :align: center
-   :alt: Rendering pane
-   
-   Rendering pane
 
-All of this visualisation is done through OpenGL and we can see what is actually being rendered by using the wireframe option [7] on the graphics pane (:numref:`dtp_cp_vis_graphicspane`).
+   Close-up of lung airways with spheres plugging gaps.
+
+When initially loaded, the airways are drawn as lines with no indication of how thick they are. On the view page change the background colour to 1,1,1 and on the graphics page select the lines and change their material to 'tissue'. Choose scale field 'radius', and set the scaling to '2*2' to use it as a diameter. Change the line shape to 'circle extrusion', and after a pause the true-sized airways are shown. Explore the model up close.
+
+One problem with the model is that each airway is a straight tube, which makes for gaps between them when they change direction. A 'cheap trick' solution is to draw a sphere at every node point. Add *node points* graphics, set the material to 'tissue', the scale field to 'radius', the scaling to '2*2*2', and the glyph to 'sphere'. That should close the gaps reasonably well. Sometimes it's necessary to be dirty to make a clean image!
+
+For a very attractive view of the airways, select the lines graphics and set the data field to 'radius'. The default range of the spectrum from 0 to 1 looks much nicer than when it is autoranged.
+
+For any of these models it may be helpful to see where the global x, y, z axes are. Add a new *point* graphics, set the material to 'black', change the glyph to 'axes_xyz' and set the base size to 50. Surprisingly, the origin is quite far from the model; you may need to zoom out or click on 'View All' to see the axes. From the relative size of the axes we can see that coordinate units are in millimetres.
+
+Task 5 Embedded Airways
+-----------------------
+
+In this task we visualise a deforming left lung model (deflating from total lung capacity) with embedded airways. Open the *DTP-Visualisation-Task5* workflow and execute it; it's a large model and can take a while to load. :numref:`fig_dtp_cp_vis_simpleviz_embedded_airways` shows a close up of this model decorated as part of this task.
+
+.. _fig_dtp_cp_vis_simpleviz_embedded_airways:
+
+.. figure:: _images/simpleviz-embedded-airways.png
+   :align: center
+
+   Left Lung with embedded airways.
+
+On loading you will see the airways as gold lines inside a lung volume mesh. The model is time-varying, so play with the time slider on the Time page to view the deformation (which is not quite as interesting as that of the heart). When looking at the list of graphics you'll be surprised to see none there! Above the list of graphics is a 'region chooser'. This model consists of two separate submodels, one for '/AirwaysLeft' and one for '/Left'. Each has its own domains and fields, plus the graphics used to visualise them.
+
+We now decorate the combined model to match the above image. First, on the view page, set the background colour to 1,1,1. Next, on the graphics page, switch to region '/AirwaysLeft' and change the lines to use scale field 'radius', scaling '2*2' and shape 'circle extrusion'. Switch to region '/Left', select lines and change the material to 'black'. Add surfaces, make them exterior and choose material 'trans' a special semi-transparent material created for this example.
+
+You will find with the fully decorated model that animation with time is much slower, mostly because of the cost of building the 3-D airways. Reducing the circle divisions on the Rendering page can speed things up a little at some cost to image quality.
+
+One interesting thing about this visualisation is the fact that the airways move with the deforming lung volume model because they are embedded at fixed element:xi locations within it. This is a technique for reducing the computation and storage costs of multi-scale models: time-varying coordinates need not be stored for the fine airways since they can get them from their host lung model.
+
+A second interesting point is that the translucency effects are imperfect and 'patchy'. It actually takes some clever rendering to draw this perfectly, and SimpleViz does not present those options.
+
+There are some other interesting fields in this model. Create contours of z = -100, with data field 'cmH2O' a pressure. You will see nothing until you hide the translucent surfaces. The order of drawing is important for simple translucency, so recreating the translucent surfaces after the isosurfaces works better. Once you can see the isosurfaces, autorange the spectrum under the Data Colouring page, and display the colour bar (changing its material to 'black' on the graphics page, under root region '/'). It was a surprise to the researcher that this field drops to zero in the centre of the lung, and may indicate an error. This goes to show how interactive visualisation plays a key role in checking the validity of computational physiology results.
+
+Task 6 Image fields and Texturing
+---------------------------------
+
+This task demonstrates how images can be drawn over graphics
 
 
-Task 2
-------
- 
-data/airways/AirwaysLobes.ex{node|elem}.
-
-Steps:
-
-#. Load nodes then elements (it’s a large model so doesn’t load instantly) and get attendees to create lines. They need to do view-all on the view tab to see them.
-#. change the line shape to circle extrusion with scale by the ‘general’ field (a radius) with scaling 2 to make it a diameter.
-#. zoom in to see the gaps between the line segments. Add nodes with sphere glyphs scaled by the same fields to close off the gaps.
-#. colour by radius by picking general as the data field
-#. on the data colouring tab. Click on autorange spectrum, try different ranges to make the image pretty. Add a colour bar. The colour bar appears in the list of graphics, but it uses some hidden attributes (not editable) to make it appear on top where it is. You can change the colour of the point graphics for the colour bar which affects its shininess and the colour of the labels. The colour bar is actually just a glyph, but it’s pretty silly to plot it at every node, for example, but it works!
-
-   * (Alan  may be able to get another model with dependent fields by the time of the course, which will make it more interesting to visualise.)
-
-#. [Alan needs to implement output of images here] From the output tab output a [hopefully hires] image of what’s on the screen, including colour bar, suitable for putting in your report.
- 
-Task 3
-------
-
-data/deforming_heart/deforming_heart.zincview.py
- 
-#. load the model which is similar to the heart in part 1 but has twice as many elements. It also defines strain fields and creates element point graphics which visualise mirrored glyphs to show principal strains: inward and red for compression, outward and blue for extension.
-#. on the time pane, adjust the time slider to animate the model
-#. zoom in and look at the deformation of parts of the tissue, the twisting of the ventricle etc.
-#. change the glyph to arrow_solid (on all 3 element points) and line to see the difference.
-#. advanced users may look at the script to see how these additional field are created by expressions; interest them in the possibilities of what they could visualise. They can also see how the time-varying model was loaded.
-#. [Alan would have to implement]. Output to ThreeJS an animating, beating heart (probably no glyphs?)
-
-Task 4
-------
- 
 Ideally I would have liked to have got images into the rendering; I’m sure Alan could get the volume texture example going pretty quickly; can use that to segment part of the foot. Images combined with a model requires us to support multiple regions or groups, which I haven’t had time to do; adding a region chooser would be simplest I think, but probably no time. Could always draw image in another region (from the loading script) but wouldn’t be able to hide it.
  
