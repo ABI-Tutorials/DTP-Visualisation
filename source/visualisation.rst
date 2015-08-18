@@ -2,7 +2,8 @@
 Visualisation
 =============
 
-This tutorial was created as part of the Computational Physiology module in the `MedTech CoRE <http://cmdt.org.nz>`_ Doctoral Training Programme. The tasks presented in this tutorial are designed to make the reader aware of key visualisation skills used in the context of computational physiology. We will demonstrate these skills across a range of spatial scales and visualisation techniques.
+This tutorial was created as part of the Computational Physiology module in the `MedTech CoRE 
+<http://medtech.org.nz>`_ Doctoral Training Programme. The tasks presented in this tutorial are designed to make the reader aware of key visualisation skills used in the context of computational physiology. We will demonstrate these skills across a range of spatial scales and visualisation techniques.
 
 Overview
 --------
@@ -78,7 +79,13 @@ Shift+Right  Camera Zoom
 
 When we transform the view with the mouse you can see the corresponding settings change in SimpleViz' view page (see :numref:`fig_dtp_cp_vis_simpleviz_viewpage`). You can also directly enter values into the controls. Regular Fly Zoom moves the eye point closer to the lookat point. Camera Zoom changes the angle of view but the eye doesn't move; if you make a very wide angle of view and then move in close, it is like looking through a very wide angle lens. The Tumble/Rotate control rotates about an axis in the scene, like pulling on a tangent to a large sphere filling the window. Play with these controls until they make sense to you. If things start looking too weird, click the 'View All' button to restore a normal view.
 
-In real life you can see from in front of your eyes to infinity, albeit not all in focus. In typical 3-D computer graphics everything is in focus, but you can only see a range of distances in front of your eye in the direction of the 'lookat point': between the near and far clipping plane distances. When you view the world in perspective mode (the default in SimpleViz), the part of space you see is called a *viewing frustum*, which is a pyramid seen from above but with its top chopped off at the near clipping plane. By turning off perspective you get a *parallel projection* where sizes of objects are unchanged by distance from the eye, like an extreme telephoto lens effect. Note that parallel projection uses the near and far clipping planes in exactly the same way.
+In real life you can see from in front of your eyes to infinity, albeit not all in focus. In typical 3-D computer graphics everything is in focus, but you can only see a range of distances in front of your eye in the direction of the 'lookat point': between the near and far clipping plane distances. When you view the scene in perspective mode (the default in SimpleViz), the part of space you see is called a *viewing frustum*, which is a pyramid seen from above but with its top chopped off at the near clipping plane. In perspective mode, closer objects are larger, which matches how we see the real world. By turning off perspective you get an *orthographic* or *parallel projection* where sizes of objects are unchanged by distance from the eye, like an extreme telephoto lens effect. :numref:`fig_dtp_cp_vis_view_frustum` illustrates the difference between these two projections, and shows that the near and far clipping planes work the same in both cases. (Note that the 'camera' is termed 'eye' in this documentation.)
+
+.. _fig_dtp_cp_vis_view_frustum:
+.. figure:: _images/ViewFrustum.png
+   :align: center
+
+   Computer graphics perspective and orthographic/parallel projections. `Original illustration <http://www.labri.fr/perso/nrougier/teaching/opengl/images/ViewFrustum.png>`_ from `Nicolas P. Rougier <http://www.labri.fr/perso/nrougier/>`_, licensed under `CC BY 4.0 <http://creativecommons.org/licenses/by/4.0/legalcode>`_. 
 
 Ideally we want to position the near plane just in front of everything that should be visible and position the far plane just behind everything that should be visible. The better the job we do of this the better the hidden graphics removal will work, which is important when making large high-quality, high-resolution images. SimpleViz sets the range more conservatively than this so that it doesn't need to change the ranges when objects are rotated out-of-plane. (You will notice in this example that multiple graphics drawn at the same depth appear to flash as they battle for which is in front and therefore seen. With lines and surfaces at the same depth the lines look like stitching; under the rendering page is a *perturb lines* option which brings the lines nicely in front. Try it out.)
 
