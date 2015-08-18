@@ -238,9 +238,9 @@ In this task we visualise a deforming left lung model (deflating from total lung
 
    Left Lung with embedded airways.
 
-On loading you will see the airways as gold lines inside a lung volume mesh. The model is time-varying, so play with the time slider on the Time page to view the deformation (which is not quite as interesting as that of the heart). When looking at the list of graphics you'll be surprised to see none there! Above the list of graphics is a 'region chooser'. This model consists of two separate submodels, one for '/AirwaysLeft' and one for '/Left'. Each has its own domains and fields, plus the graphics used to visualise them.
+On loading you will see the airways as gold lines inside a lung volume mesh. The model is time-varying, so play with the time slider on the Time page to view the deformation (which is not quite as interesting as that of the heart). When looking at the list of graphics you'll be surprised to see an empty list! Above the list of graphics is a 'region chooser'. This model consists of two separate submodels, one for '/AirwaysLeft' and one for '/Left'. Each has its own domains and fields, plus the graphics used to visualise them.
 
-We now decorate the combined model to match the above image. First, on the view page, set the background colour to 1,1,1. Next, on the graphics page, switch to region '/AirwaysLeft' and change the lines to use scale field 'radius', scaling '2*2' and shape 'circle extrusion'. Switch to region '/Left', select lines and change the material to 'black'. Add surfaces, make them exterior and choose material 'trans' a special semi-transparent material created for this example.
+We now decorate the combined model to match the above image. First, on the view page, set the background colour to 1,1,1. Next, on the graphics page, switch to region '/AirwaysLeft', select the lines and set scale field 'radius', scaling '2*2' and shape 'circle extrusion'. Switch to region '/Left', select lines and change the material to 'black'. Add surfaces, make them exterior and choose material 'trans', a special semi-transparent material created for this example.
 
 You will find with the fully decorated model that animation with time is much slower, mostly because of the cost of building the 3-D airways. Reducing the circle divisions on the Rendering page can speed things up a little at some cost to image quality.
 
@@ -250,11 +250,31 @@ A second interesting point is that the translucency effects are imperfect and 'p
 
 There are some other interesting fields in this model. Create contours of z = -100, with data field 'cmH2O' a pressure. You will see nothing until you hide the translucent surfaces. The order of drawing is important for simple translucency, so recreating the translucent surfaces after the isosurfaces works better. Once you can see the isosurfaces, autorange the spectrum under the Data Colouring page, and display the colour bar (changing its material to 'black' on the graphics page, under root region '/'). It was a surprise to the researcher that this field drops to zero in the centre of the lung, and may indicate an error. This goes to show how interactive visualisation plays a key role in checking the validity of computational physiology results.
 
-Task 6 Image fields and Texturing
+On the 'Left' region you can also create *data points* with coordinate field 'stress_coordinates' and colour them by data field 'stressp'. The data points are also embedded in the lungs and field 'stressp' varies with time. You may need to hide other graphics to see these well. Play around with adjusting time and autorange the spectrum at different times in the Data Colouring page. Data points can be visualised with scaled glyphs just like node points.
+
+
+Task 6 Image Fields and Texturing
 ---------------------------------
 
-This task demonstrates how images can be drawn over graphics
+This task demonstrates how images can be used to colour, or *texture* graphics, and how images can be segmented into surfaces as contours of the image field. Open the *DTP-Visualisation-Task6* workflow and execute it. It may take a while to load since it contains a stack of images and some of the contours calculations take some time. :numref:`fig_dtp_cp_vis_simpleviz_footimage` shows a view of the model from later in this task. The image data is of the foot, cropped from the NLM Visible Human Project male dataset.
 
+.. _fig_dtp_cp_vis_simpleviz_footimage:
 
-Ideally I would have liked to have got images into the rendering; I’m sure Alan could get the volume texture example going pretty quickly; can use that to segment part of the foot. Images combined with a model requires us to support multiple regions or groups, which I haven’t had time to do; adding a region chooser would be simplest I think, but probably no time. Could always draw image in another region (from the loading script) but wouldn’t be able to hide it.
- 
+.. figure:: _images/simpleviz-footimage.png
+   :align: center
+
+   Segmented skin, muscles and vessels of the foot image.
+
+Initially two perpendicular slices of the 3-D images -- contours of x and y -- are drawn, plus two contours graphics segmenting surfaces of the skin and interior red tissue including muscles and larger vessels. An initially hidden contours graphics shows segmented bone surfaces, but is not so clean and includes a lot of non-bone surfaces.
+
+First hide the last two contours graphics and inspect the images drawn in the image block. Try different values of x and y contours, for example enter isovalues '120, 180' for the first contours (of x), and '120, 180, 240, 300' for the second contours (of y). This shows that the entire volume image is present and able to be shown over graphics. Note you can't currently set up these graphics via the SimpleViz interface as it doesn't have the *texture coordinates* field setting which tells the graphics which part of the image to draw at primitive vertices.
+
+Restore contours to x=128.5, y=185.5, and then show the last two contours in the graphics list, the muscle and skin surfaces. To achieve these visualisations the loader script created fields 'mag_non_muscle' and 'blue' as expressions on the colour (in red, green, blue or RGB space). You can see that it is very clear on the images where the images are red and blue, so these work well.
+
+Now switch to the Rendering page of the toolbar and see that only the minimum divisions, at '16*16*16' are used for this model. If you were to create new lines graphics you will see that the isosurfaces are calculated over a separate mesh, sized so that 16 image pixels cross each element. This means that the contours will be as fine as the native resolution of the images. See the result of setting the minimum divisions to 4, then 8, then 16, then enter 32 and wait a while for even finer contours to be seen. Hide the skin and any other distracting graphics and look at the muscles. Transform the view to see them from different angles and up close. Re-display the skin contours, and change their material to 'skin_trans' which is semi-transparent so the muscles can be seen within it.
+
+Zoom right inside this model and change the view angle on the View page of the toolbar to a high value e.g. 90 degrees or more. Explore around this amazing 3-D world you have created!
+
+Hide all graphics and turn on the 3rd contours in the list, which correspond to bones. With 32 tessellation divisions they will take a few seconds to be generated. You will see that, indeed, some bones are visible, however there is a great deal of noise and many other structures are falsely shown. This demonstrates some of the difficulty of automatic segmentation on real images, and why additional knowledge including models of the shapes and relative sizes of the parts expected is often needed to extract patient specific models from images.
+
+As an advanced exercise, try tweaking the isovalues for this and other contours to see whether better surfaces can be created. Using a lower tessellation minimum divisions e.g. 16 (on the Rendering page) while exploring.
